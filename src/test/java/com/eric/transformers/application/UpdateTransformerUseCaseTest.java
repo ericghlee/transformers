@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static com.eric.transformers.fixture.TransformerFixture.getSoundwaveRequest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -33,7 +34,9 @@ class UpdateTransformerUseCaseTest {
 
     @Test
     public void testExecute() {
-        TransformerRequest request = TransformerFixture.getSoundwaveRequest();
+        TransformerRequest request = getSoundwaveRequest();
+
+        when(repository.findById(request.getId())).thenReturn(Optional.of(getSoundwaveRequest().toTransformer()));
 
         updateTransformerUseCase.execute(request);
 
@@ -55,7 +58,7 @@ class UpdateTransformerUseCaseTest {
 
     @Test
     public void testExecute_does_not_exists() {
-        TransformerRequest request = TransformerFixture.getSoundwaveRequest();
+        TransformerRequest request = getSoundwaveRequest();
 
         when(repository.findById(request.getId())).thenReturn(Optional.empty());
 

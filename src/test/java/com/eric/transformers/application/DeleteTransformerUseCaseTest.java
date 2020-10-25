@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static com.eric.transformers.fixture.TransformerFixture.getSoundwaveRequest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,6 +32,8 @@ class DeleteTransformerUseCaseTest {
     @Test
     public void testExecute() {
         String id = "transformer";
+
+        when(repository.findById(id)).thenReturn(Optional.of(getSoundwaveRequest().toTransformer()));
 
         deleteTransformerUseCase.execute(id);
 
