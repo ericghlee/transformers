@@ -14,12 +14,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
 
 @ExtendWith(MockitoExtension.class)
-class CreateTransformerUseCaseTest {
+class UpdateTransformerUseCaseTest {
 
     @Captor
     private ArgumentCaptor<Transformer> captor;
@@ -28,15 +29,13 @@ class CreateTransformerUseCaseTest {
     private TransformerRepository repository;
 
     @InjectMocks
-    private CreateTransformerUseCase createTransformerUseCase;
+    private UpdateTransformerUseCase updateTransformerUseCase;
 
     @Test
     public void testExecute() {
         TransformerRequest request = TransformerFixture.getSoundwaveRequest();
 
-        when(repository.findById(request.getId())).thenReturn(Optional.empty());
-
-        createTransformerUseCase.execute(request);
+        updateTransformerUseCase.execute(request);
 
         verify(repository).save(captor.capture());
 
@@ -53,14 +52,15 @@ class CreateTransformerUseCaseTest {
         assertEquals(request.getFirepower(), value.getFirepower());
     }
 
+
     @Test
-    public void testExecute_already_exists() {
+    public void testExecute_does_not_exists() {
         TransformerRequest request = TransformerFixture.getSoundwaveRequest();
 
-        when(repository.findById(request.getId())).thenReturn(Optional.of(mock(Transformer.class)));
+        when(repository.findById(request.getId())).thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class, () -> {
-            createTransformerUseCase.execute(request);
+            updateTransformerUseCase.execute(request);
             verify(repository, never()).save(any());
         });
     }

@@ -1,13 +1,17 @@
 package com.eric.transformers.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Builder
-@Entity(name = "transformer")
+@Entity(name = "transformers")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Transformer {
 
     @Id
@@ -41,6 +45,9 @@ public class Transformer {
 
     @Column(name = "firepower")
     private Integer firepower;
+
+    @Column(name = "skill")
+    private Integer skill;
 
     @PostLoad
     void fillTransient() {

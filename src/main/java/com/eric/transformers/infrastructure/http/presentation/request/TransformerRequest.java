@@ -1,5 +1,7 @@
-package com.eric.transformers.infrastructure.http.presentation;
+package com.eric.transformers.infrastructure.http.presentation.request;
 
+import com.eric.transformers.domain.Team;
+import com.eric.transformers.domain.Transformer;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +15,7 @@ import javax.validation.constraints.Min;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateTransformerRequest {
+public class TransformerRequest {
 
     @NotNull
     private String id;
@@ -56,4 +58,25 @@ public class CreateTransformerRequest {
     @Min(1)
     @Max(10)
     private Integer firepower;
+
+    @NotNull
+    @Min(1)
+    @Max(10)
+    private Integer skill;
+
+    public Transformer toTransformer() {
+        return Transformer.builder()
+                .id(this.id)
+                .team(Team.of(this.team))
+                .teamCode(this.team)
+                .strength(this.strength)
+                .intelligence(this.intelligence)
+                .speed(this.speed)
+                .endurance(this.endurance)
+                .rank(this.rank)
+                .courage(this.courage)
+                .firepower(this.firepower)
+                .skill(this.skill)
+                .build();
+    }
 }

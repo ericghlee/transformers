@@ -6,18 +6,18 @@ import com.eric.transformers.infrastructure.repository.TransformerRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CreateTransformerUseCase {
+public class UpdateTransformerUseCase {
 
     private final TransformerRepository transformerRepository;
 
-    public CreateTransformerUseCase(TransformerRepository transformerRepository) {
+    public UpdateTransformerUseCase(TransformerRepository transformerRepository) {
         this.transformerRepository = transformerRepository;
     }
 
     public Transformer execute(TransformerRequest request) {
         Transformer transformer = request.toTransformer();
 
-        if (transformerRepository.findById(transformer.getId()).isPresent()) {
+        if (transformerRepository.findById(transformer.getId()).isEmpty()) {
             throw new IllegalArgumentException();
         }
 

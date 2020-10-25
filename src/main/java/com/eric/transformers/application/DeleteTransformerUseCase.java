@@ -6,21 +6,20 @@ import com.eric.transformers.infrastructure.repository.TransformerRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CreateTransformerUseCase {
+public class DeleteTransformerUseCase {
 
     private final TransformerRepository transformerRepository;
 
-    public CreateTransformerUseCase(TransformerRepository transformerRepository) {
+    public DeleteTransformerUseCase(TransformerRepository transformerRepository) {
         this.transformerRepository = transformerRepository;
     }
 
-    public Transformer execute(TransformerRequest request) {
-        Transformer transformer = request.toTransformer();
+    public void execute(String id) {
 
-        if (transformerRepository.findById(transformer.getId()).isPresent()) {
+        if (transformerRepository.findById(id).isEmpty()) {
             throw new IllegalArgumentException();
         }
 
-        return transformerRepository.save(transformer);
+        transformerRepository.deleteById(id);
     }
 }

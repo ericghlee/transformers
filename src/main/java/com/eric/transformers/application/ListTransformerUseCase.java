@@ -5,22 +5,18 @@ import com.eric.transformers.infrastructure.http.presentation.request.Transforme
 import com.eric.transformers.infrastructure.repository.TransformerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class CreateTransformerUseCase {
+public class ListTransformerUseCase {
 
     private final TransformerRepository transformerRepository;
 
-    public CreateTransformerUseCase(TransformerRepository transformerRepository) {
+    public ListTransformerUseCase(TransformerRepository transformerRepository) {
         this.transformerRepository = transformerRepository;
     }
 
-    public Transformer execute(TransformerRequest request) {
-        Transformer transformer = request.toTransformer();
-
-        if (transformerRepository.findById(transformer.getId()).isPresent()) {
-            throw new IllegalArgumentException();
-        }
-
-        return transformerRepository.save(transformer);
+    public List<Transformer> execute() {
+        return transformerRepository.findAll();
     }
 }

@@ -1,4 +1,4 @@
-package com.eric.transformers.infrastructure.http.presentation;
+package com.eric.transformers.infrastructure.http.presentation.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateTransformerResponse {
+public class DefaultResponse {
 
     private String message;
 
-    private String error;
+    private Boolean error;
 }
